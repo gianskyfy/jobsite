@@ -1,0 +1,57 @@
+.ReactModal__Overlay.ReactModal__Overlay--after-open {
+    z-index: 9999;
+}
+
+.ReactModal__Content.ReactModal__Content--after-open {
+    padding: 0 !important;
+    width: 400px;
+}
+
+.modal .title
+{
+  background: #2a41e8;
+  padding: 10px;
+  color: #fff;
+  position: relative;
+}
+
+.modal .title h2
+{
+  color: #fff;
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.modal .title button
+{
+  float: right;
+  vertical-align: middle;
+  display: inline-flex;
+}
+
+.modal .body .modal-logo
+{
+    width: 200px;
+    margin: auto;
+    display: block;
+    margin-bottom: 19px;
+    margin-top: 20px;
+}
+
+.modal .body
+{
+  padding: 0px 20px 20px 20px;
+}
+.modal .body button
+{
+  margin-top:10px;
+  width: 100%;
+}
+
+/* small note */
+.small-note
+{
+  font-size: 10px;
+  font-weight: 600;
+  color: #555;
+}
