@@ -23,8 +23,11 @@
     "react-dom": "^16.4.2",
     "react-modal": "^3.5.1",
     "react-particles-js": "^2.3.0",
+    "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
-    "react-router-dom": "^4.3.1"
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0"
   },
   "meteor": {
     "mainModule": {

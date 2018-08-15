@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
 import Task from '/imports/ui/components/Task.js';
 import MainPage from '../pages/MainPage.jsx';
 
@@ -13,6 +14,9 @@ import '/imports/ui/styles/component.css';
 
 import HeaderBar from '/imports/ui/components/HeaderBar.jsx';
 
+// import store for Redux
+import store from '../../redux/store';
+
 // App component - represents the whole app
 export default class App extends Component {
 
@@ -22,22 +26,10 @@ export default class App extends Component {
     super(props);
 
     this.state = this.getMeteorData();
-    this.logout = this.logout.bind(this);
   }
 
   getMeteorData() {
     return { isAuthenticated: Meteor.userId() !== null };
-  }
-
-  logout(e) {
-    e.preventDefault();
-    Meteor.logout((err) => {
-      if (err) {
-        console.log(err.reason);
-      } else {
-        this.props.history.push('/login');
-      }
-    });
   }
 
   getTasks() {
@@ -56,12 +48,14 @@ export default class App extends Component {
 
   render() {
     return (
-      <div>
-        <HeaderBar logout={this.logout} />
-        <div class="content-wrap">
-          <MainPage />
+      <Provider store={store}>
+        <div>
+          <HeaderBar />
+          <div className="content-wrap">
+            <MainPage />
+          </div>
         </div>
-      </div>
+      </Provider>
     );
   }
 }

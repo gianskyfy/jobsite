@@ -1,5 +1,7 @@
 import React, { Component, Text } from 'react';
 import { withHistory, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { login } from '../../reducers/actions/authActions';
 
 // import helpers
 import Modal from 'react-modal';
@@ -21,7 +23,7 @@ const customStyles = { content : {
 }};
 Modal.setAppElement('body');
 
-export default class HeaderBar extends Component {
+class HeaderBar extends Component {
   constructor(props)
   {
     super(props);
@@ -33,9 +35,17 @@ export default class HeaderBar extends Component {
       { _id: 5, name: 'For Employers',
         sub: [{ _id: 6, name: "Find Saleslancers"}]  },
     ];
-    this.state = { modalIsOpen: false };
+    this.state = { 
+      modalIsOpen: false,
+      username: "",
+      password: ""
+    };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+
+    // bind onchange
+    this.onChange = this.onChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   componentDidMount() {
@@ -54,6 +64,17 @@ export default class HeaderBar extends Component {
       return this.Menus.map((menu) => (
           <NavMenu key={menu._id} menu={menu} />
       ));
+  }
+  
+  onChange(e)
+  {
+    this.setState({[ e.target.name]: e.target.value });
+  }
+
+  onClick(e)
+  {
+    e.preventDefault();
+    this.props.login(this.state.username, this.state.password);
   }
 
   render() {
@@ -96,20 +117,19 @@ export default class HeaderBar extends Component {
                 <h2>Sign In</h2>
                 <button onClick={this.closeModal}>close</button>
               </div>
-              <div class="body">
+              <div className="body">
                 <div>
                   <img className="modal-logo" src="/img/logo.png" />
                 </div>
                 <form>
-
                   <label>Username</label>
-                  <input id="uname" />
+                  <input id="uname" name="username" value={this.state.username} onChange={ this.onChange } />
 
                   <label>Password</label>
-                  <input id="pword" />
-                  <label class="small-note blue">Not yet registered? Click <a href="#">Here</a></label>
-                  <label class="small-note blue">Forgot your password? Click <a href="#">Here</a></label>
-                  <button className="button ripple-effect">Sign In</button>
+                  <input id="pword" name="password" value={this.state.password} onChange={ this.onChange } />
+                  <label className="small-note blue">Not yet registered? Click <a href="#">Here</a></label>
+                  <label className="small-note blue">Forgot your password? Click <a href="#">Here</a></label>
+                  <button className="button ripple-effect" onClick={this.onClick}>Sign In</button>
                 </form>
               </div>
             </div>
@@ -118,3 +138,6 @@ export default class HeaderBar extends Component {
     )
   }
 }
+
+
+export default connect(null, { login })(HeaderBar);

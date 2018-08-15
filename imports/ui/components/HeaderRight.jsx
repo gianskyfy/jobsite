@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { logout } from '../../reducers/actions/authActions';
+
 //import controller
 import MenuBurger from './MenuBurger.jsx';
 
-export default  class HeaderRight extends Component {
+class HeaderRight extends Component {
   constructor(props) {
     super(props);
   }
@@ -37,7 +40,7 @@ export default  class HeaderRight extends Component {
 
               <ul  className="user-menu-small-nav">
                 <li><a href="/dashboard"><i  className="icon-material-outline-dashboard"></i> Dashboard</a></li>
-                <li><a href="#" onClick={this.props.logout}><i  className="icon-material-outline-power-settings-new"></i> Logout</a></li>
+                <li><a href="#" onClick={this.props.logout()}><i  className="icon-material-outline-power-settings-new"></i> Logout</a></li>
               </ul>
 
             </div>
@@ -51,3 +54,5 @@ export default  class HeaderRight extends Component {
     )
   }
 }
+
+export default connect(null, { logout })(HeaderRight);
