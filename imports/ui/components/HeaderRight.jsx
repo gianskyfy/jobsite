@@ -40,7 +40,7 @@ class HeaderRight extends Component {
 
               <ul  className="user-menu-small-nav">
                 <li><a href="/dashboard"><i  className="icon-material-outline-dashboard"></i> Dashboard</a></li>
-                <li><a href="#" onClick={this.props.logout()}><i  className="icon-material-outline-power-settings-new"></i> Logout</a></li>
+                <li><a href="#" onClick={this.props.logout}><i  className="icon-material-outline-power-settings-new"></i> Logout</a></li>
               </ul>
 
             </div>

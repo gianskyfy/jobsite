@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import Task from '/imports/ui/components/Task.js';
 import MainPage from '../pages/MainPage.jsx';
-
-// import jquery
-import $ from 'jquery/dist/jquery.min.js';
 
 // import all class
 import '/imports/ui/styles/bootstrap-grid.css';
@@ -24,26 +20,6 @@ export default class App extends Component {
     // now we load jquery into global
 
     super(props);
-
-    this.state = this.getMeteorData();
-  }
-
-  getMeteorData() {
-    return { isAuthenticated: Meteor.userId() !== null };
-  }
-
-  getTasks() {
-    return [
-      { _id: 1, text: 'This is task 1' },
-      { _id: 2, text: 'This is task 2' },
-      { _id: 3, text: 'This is task 3' },
-    ];
-  }
-
-  renderTasks() {
-    return this.getTasks().map((task) => (
-      <Task key={task._id} task={task} />
-    ));
   }
 
   render() {
@@ -52,7 +28,7 @@ export default class App extends Component {
         <div>
           <HeaderBar />
           <div className="content-wrap">
-            <MainPage />
+            {this.props.content}
           </div>
         </div>
       </Provider>

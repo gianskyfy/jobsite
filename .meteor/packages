@@ -22,3 +22,4 @@ less@2.7.12
 accounts-password@1.5.1
 static-html
 react-meteor-data
+kadira:flow-router
