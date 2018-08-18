@@ -3,15 +3,13 @@ import { mount } from 'react-mounter';
 // import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 //mainlayout
-import MainLayout from '/imports/ui/layouts/MainLayout';
-
-// containers
+import Main from '/imports/ui/layouts/Main';
 import App from '/imports/ui/layouts/App';
-
 
 import MainPage from '/imports/ui/pages/MainPage';
 import LoginPage from '/imports/ui/pages/LoginPage';
 import SignupPage from '/imports/ui/pages/SignupPage';
+import Dashboard from '../../imports/ui/pages/Dashboard';
 
 // export const renderRoutes = () => (
 //   <Router>
@@ -23,11 +21,7 @@ import SignupPage from '/imports/ui/pages/SignupPage';
 //   </Router>
 // )
 
-isAuthenticated()
-{
-  return (Meteor.userId() !== null)
-}
-
+// free routes
 FlowRouter.route('/', {
     action() {
         mount(App, {
@@ -36,13 +30,19 @@ FlowRouter.route('/', {
     }
 });
 
-FlowRouter.route('/dashboard', {
+FlowRouter.route('/signup', {
   action() {
-      if(!this.isAuthenticated())
-        FlowRouter.go("/err");
-
       mount(App, {
-        content: (<MainPage />)
+        content: (<SignupPage />)
+      })
+  }
+});
+
+FlowRouter.route('/dashboard', {
+  authenticated: true,
+  action() {
+      mount(Main, {
+        content: (<Dashboard />)
       })
   }
 });

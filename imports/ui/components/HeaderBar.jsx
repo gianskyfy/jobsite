@@ -1,7 +1,8 @@
 import React, { Component, Text } from 'react';
 import { withHistory, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { login } from '../../reducers/actions/authActions';
+import { login, getUser } from '../../reducers/actions/authActions';
+import { isHeadMain } from '../../reducers/actions/componentActions';
 
 // import helpers
 import Modal from 'react-modal';
@@ -36,17 +37,20 @@ class HeaderBar extends Component {
       { _id: 5, name: 'For Employers',
         sub: [{ _id: 6, name: "Find Saleslancers"}]  },
     ];
+
     this.state = { 
-      modalIsOpen: false,
-      username: "",
-      password: ""
+      modalIsOpen: false
     };
+
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
 
     // bind onchange
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
+
+    this.props.isHeadMain();
+    if(this.props.getUser());
   }
 
   componentDidMount() {
@@ -79,6 +83,12 @@ class HeaderBar extends Component {
   }
 
   render() {
+    let navs;
+    if(this.props.showHeaderMenu)
+    {
+        navs =<nav id="navigation"><ul id="responsive"> {this.loadMenus()} </ul></nav>;
+    }
+
     return (
       <div>
         <header id="header-container"  className="fullwidth " >
@@ -86,21 +96,14 @@ class HeaderBar extends Component {
         		<div  className="container">
 
         			<div  className="left-side">
-
-        				<div id="logo">
-        					<img src="/img/logo.png" />
-        				</div>
-
-        				<nav id="navigation">
-        					<ul id="responsive"> {this.loadMenus()} </ul>
-        				</nav>
-        				<div  className="clearfix"></div>
-
+                <div id="logo">
+                    <img src="/img/logo.png" />
+                </div>
+                { navs }
+                <div  className="clearfix"></div>
         			</div>
 
-              <HeaderRight
-                logout={this.props.logout}
-                signin={this.openModal} />
+              <HeaderRight signin={ this.openModal } />
         		</div>
         	</div>
 
@@ -140,5 +143,12 @@ class HeaderBar extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  console.log(state);
+  if(state.component != null)
+    return { showHeaderMenu: state.component.showMenu }
+  else
+    return { }
+}
 
-export default connect(null, { login })(HeaderBar);
+export default connect(mapStateToProps, { isHeadMain, login, getUser })(HeaderBar);

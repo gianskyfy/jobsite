@@ -1,6 +1,3 @@
-import React, { Component, Text } from 'react';
-import { withHistory, Link } from 'react-router-dom';
-import { Accounts } from 'meteor/accounts-base';
 import $ from 'jquery/dist/jquery.min.js';
 export default class HeaderScripts {
     load()
