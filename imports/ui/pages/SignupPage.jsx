@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
-import { withHistory, Link } from 'react-router-dom';
 import { Accounts } from 'meteor/accounts-base';
 
 import '/imports/ui/styles/signup.less';
-import Navbar from '/imports/ui/components/Navbar.jsx';
 
 export default class SignupPage extends Component {
   constructor(props) {
@@ -40,7 +38,6 @@ export default class SignupPage extends Component {
   render() {
     return (
       <div>
-        <Navbar />
         <div className='signup-container'>
           <div className='signup-box'>
             <form id='signup-form'

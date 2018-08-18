@@ -1,4 +1,4 @@
-import { AUTH_LOGIN, AUTH_LOGOUT } from './types';
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_USER } from './types';
 
 export const login = (email, password) => dispatch => {
     Meteor.loginWithPassword(email, password, (err) => {
@@ -23,5 +23,13 @@ export const logout = () => dispatch => {
                 payload: true
             });
         }
+    });
+}
+
+export const getUser = () => dispatch => {
+    let user = Meteor.user();
+    dispatch({
+        type: AUTH_USER,
+        payload: user
     });
 }
