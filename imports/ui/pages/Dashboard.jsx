@@ -1,41 +1,32 @@
 import React, { Component } from 'react';
-import $ from 'jquery/dist/jquery.min.js';
-class Dashboard extends Component {
+import { withTracker } from 'meteor/react-meteor-data';
+import { fetch } from '/lib/api/Jobs';
+
+//import components
+import Joblist from '../components/Joblist';
+
+//import scripts
+import LayoutScripts from "../js/layoutscripts";
+
+class DashboardPage extends Component {
   constructor(props) {
     super(props);
   }
 
   componentDidMount() {
-    parent = this;
-    parent.fullPageScrollbar();
-    
-    $(window).on('load resize', function() {
-		var headerHeight = $("#header-container").outerHeight();
-        var windowHeight = $(window).outerHeight() - headerHeight;
-
-        
-        $('.full-page-content-container, .dashboard-content-container, .dashboard-sidebar-inner, .dashboard-container, .full-page-container').css({ height: windowHeight });
-        $('.dashboard-content-inner').css({ 'min-height': windowHeight });
-
-        parent.fullPageScrollbar();
-	});
+    new LayoutScripts().load();
   }
 
-  fullPageScrollbar() {
-    $(".full-page-sidebar-inner, .dashboard-sidebar-inner").each(function(i, elem) {
-        var headerHeight = $("#header-container").outerHeight();
-        var windowHeight = $(window).outerHeight() - headerHeight;
-        var sidebarContainerHeight = $(elem).find(".sidebar-container, .dashboard-nav-container").outerHeight();
-
-        // Enables scrollbar if sidebar is higher than wrapper
-        if (sidebarContainerHeight > windowHeight) {
-            $(elem).css({ height: windowHeight });
-    
-        } else {
-            $(elem).find('.simplebar-track').hide();
-        }
-    });
-
+  renderJobs() {
+    if(this.props.jobs != null)
+    {
+        return this.props.jobs.map((job) => (
+        <Joblist key={job._id} />
+        ));
+    }
+    else{
+        return <div>123</div>
+    }
   }
 
   render() {
@@ -59,40 +50,16 @@ class Dashboard extends Component {
                     <div className="dashboard-box margin-top-0">
 
                         <div className="headline">
-                            <h3><i className="icon-material-outline-business-center"></i> My Job Applications</h3>
+                            <h3><i className="icon-material-outline-business-center"></i> My Job Postings</h3>
                         </div>
 
                         <div className="content">
                             <ul className="dashboard-box-list">
-                                <li>
-                                    <div className="job-listing">
-
-                                        <div className="job-listing-details">
-
-                                            <div className="job-listing-description">
-                                                <h3 className="job-listing-title">
-                                                    <a href="#">Skyfy - Sales Executive</a> 
-                                                    <span className="dashboard-status-button yellow">Pending</span>
-                                                </h3>
-
-                                                <div className="job-listing-footer">
-                                                    <ul>
-                                                        <li><i className="icon-material-outline-date-range"></i> Posted on 28 June, 2018</li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                    <div className="buttons-to-right always-visible">
-                                        <a href="dashboard-manage-candidates.html" className="button ripple-effect">
-                                            <i className="icon-material-outline-supervisor-account"></i> Manage Applciation
-                                        </a>
-                                        <a href="#" className="button gray ripple-effect ico" title="Edit" data-tippy-placement="top"><i className="icon-feather-edit"></i></a>
-                                        <a href="#" className="button gray ripple-effect ico" title="Remove" data-tippy-placement="top"><i className="icon-feather-trash-2"></i></a>
-                                    </div>
-                                </li>
+                                {this.props.jobs.length !== 0 ? (
+                                    this.renderJobs()
+                                ) : (
+                                    <div id="loadingText">Loading Jobs...</div>
+                                )}
                             </ul>
                         </div>
                     </div>
@@ -134,5 +101,12 @@ class Dashboard extends Component {
     )
   }
 }
+
+const Dashboard = withTracker(() => {
+  const jobs = fetch();
+  return {
+    jobs,
+  };
+})(DashboardPage);
 
 export default Dashboard;

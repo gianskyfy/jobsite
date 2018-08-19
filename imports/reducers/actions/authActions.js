@@ -5,10 +5,7 @@ export const login = (email, password) => dispatch => {
         if (err) {
           console.log(err);
         } else {
-          dispatch({
-              type: AUTH_LOGIN,
-              payload: true
-          });
+            FlowRouter.go("/dashboard");
         }
     });
 }
@@ -18,18 +15,16 @@ export const logout = () => dispatch => {
         if (err) {
           console.log(err);
         } else {
-            dispatch({
-                type: AUTH_LOGOUT,
-                payload: true
-            });
+            FlowRouter.go("/");
         }
     });
 }
 
 export const getUser = () => dispatch => {
-    let user = Meteor.user();
-    dispatch({
-        type: AUTH_USER,
-        payload: user
-    });
+    Tracker.autorun(() => {
+        dispatch({
+            type: AUTH_USER,
+            payload: Meteor.user()
+        });
+    })
 }

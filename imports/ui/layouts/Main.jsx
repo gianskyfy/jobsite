@@ -42,7 +42,14 @@ class Main extends Component {
                               <div className="dashboard-nav-inner">
 
                                   <ul data-submenu-title="Overview">
-                                      <li><a href="dashboard.html"><i className="icon-material-outline-dashboard"></i> Dashboard</a></li>
+                                        <li><a href="/dashboard"><i className="icon-material-outline-dashboard"></i> Dashboard</a></li>
+                                        <li className="active-submenu"><a href="#"><i className="icon-material-outline-business-center"></i> Jobs</a>
+                                            <ul>
+                                                <li><a href="#">Manage Jobs <span className="nav-tag">3</span></a></li>
+                                                <li><a href="#">Manage Candidates</a></li>
+                                                <li><a href="/postjob">Post a Job</a></li>
+                                            </ul>	
+                                        </li>
                                   </ul>
                                   
                               </div>
@@ -52,7 +59,9 @@ class Main extends Component {
                   </div>
               </div>
               <div className="dashboard-content-container" data-simplebar>
-                  {this.props.content}
+                    <div>
+                        { this.props.content }
+                    </div>
               </div>
             </div>
           </div>

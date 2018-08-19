@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';  
 import { connect } from 'react-redux';
-import { logout } from '../../reducers/actions/authActions';
+import { logout, getUser } from '../../reducers/actions/authActions';
 
 //import controller
 import MenuBurger from './MenuBurger.jsx';
 
 class HeaderRight extends Component {
   constructor(props) {
-    super(props);
+      super(props);
+
+      this.state = { };
   }
 
   render() {
+    const { user } = this.props;
     return (
       <div  className="right-side">
 
@@ -33,7 +37,11 @@ class HeaderRight extends Component {
                 <div  className="user-details">
                   <div  className="user-avatar status-online"><img src="/img/resources/user-avatar-small-01.jpg" alt=""/></div>
                   <div  className="user-name">
-                    Tom Smith <span>Freelancer</span>
+                    { user ? (
+                      <label>{ user.name } <span>{ user.email }</span></label>
+                    ) : (
+                      <label>Salesfy User</label>
+                    )}
                   </div>
                 </div>
               </div>
@@ -55,4 +63,16 @@ class HeaderRight extends Component {
   }
 }
 
-export default connect(null, { logout })(HeaderRight);
+function mapStateToProps(state) {
+  let returnArray = {};
+
+  if(state.auth != null)
+  {
+      returnArray["user"] = state.auth.userInfo;
+  }
+  console.log();
+  return returnArray;
+}
+
+
+export default connect(mapStateToProps, { logout })(HeaderRight);

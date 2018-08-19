@@ -10,7 +10,7 @@ import MainPage from '/imports/ui/pages/MainPage';
 import LoginPage from '/imports/ui/pages/LoginPage';
 import SignupPage from '/imports/ui/pages/SignupPage';
 import Dashboard from '../../imports/ui/pages/Dashboard';
-
+import PostJob from '../../imports/ui/pages/PostJob';
 // export const renderRoutes = () => (
 //   <Router>
 //     <div>
@@ -39,6 +39,7 @@ FlowRouter.route('/signup', {
 });
 
 FlowRouter.route('/dashboard', {
+  middlewares: [checkAuthentication],
   authenticated: true,
   action() {
       mount(Main, {
@@ -46,3 +47,27 @@ FlowRouter.route('/dashboard', {
       })
   }
 });
+
+FlowRouter.route('/postjob', {
+  middlewares: [checkAuthentication],
+  authenticated: true,
+  action() {
+      mount(Main, {
+        content: (<PostJob />)
+      })
+  }
+});
+
+FlowRouter.notFound = {
+  action: function() {
+      if(Meteor.userId() === null)
+        FlowRouter.go("/");
+      else
+        FlowRouter.go("/dashboard");   
+  }
+};
+
+function checkAuthentication(context) {
+    if(Meteor.userId() === null)
+        FlowRouter.go("/");  
+}

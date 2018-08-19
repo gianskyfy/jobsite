@@ -23,3 +23,7 @@ accounts-password@1.5.1
 static-html
 react-meteor-data
 kadira:flow-router
+session
+aldeed:simple-schema
+mdg:validation-error
+mdg:validated-method

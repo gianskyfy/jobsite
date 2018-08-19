@@ -50,7 +50,7 @@ class HeaderBar extends Component {
     this.onClick = this.onClick.bind(this);
 
     this.props.isHeadMain();
-    if(this.props.getUser());
+    this.props.getUser();
   }
 
   componentDidMount() {
@@ -130,7 +130,7 @@ class HeaderBar extends Component {
                   <input id="uname" name="username" value={this.state.username} onChange={ this.onChange } />
 
                   <label>Password</label>
-                  <input id="pword" name="password" value={this.state.password} onChange={ this.onChange } />
+                  <input type="password" id="pword" name="password" value={this.state.password} onChange={ this.onChange } />
                   <label className="small-note blue">Not yet registered? Click <a href="#">Here</a></label>
                   <label className="small-note blue">Forgot your password? Click <a href="#">Here</a></label>
                   <button className="button ripple-effect" onClick={this.onClick}>Sign In</button>
@@ -144,11 +144,14 @@ class HeaderBar extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log(state);
+  let returnArray = {};
   if(state.component != null)
-    return { showHeaderMenu: state.component.showMenu }
-  else
-    return { }
+    returnArray.showHeaderMenu = state.component.showMenu;
+
+  if(state.auth != null)
+    returnArray.userInfo = state.auth.userInfo;
+
+  return returnArray;
 }
 
 export default connect(mapStateToProps, { isHeadMain, login, getUser })(HeaderBar);
