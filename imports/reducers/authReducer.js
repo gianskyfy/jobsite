@@ -4,8 +4,6 @@ const initiateState = {};
 
 export default function(state = initiateState, action)
 {
-    let user = Meteor.users.find({ _id: Meteor.userId() });
-      console.log(user);
     switch(action.type)
     {
         case AUTH_LOGIN:
@@ -21,7 +19,11 @@ export default function(state = initiateState, action)
         case AUTH_USER:
             return {
                 ...state,
-                userInfo: action.payload
+                userInfo: {
+                    email: action.payload && action.payload.username,
+                    name: action.payload && action.payload.profile.name,
+                    userid: action.payload && action.payload._id
+                }
             }
         default:
             return state;
