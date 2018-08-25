@@ -5,7 +5,7 @@ export const login = (email, password) => dispatch => {
         if (err) {
           console.log(err);
         } else {
-            FlowRouter.go("/dashboard");
+            FlowRouter.redirect("/dashboard");
         }
     });
 }
@@ -15,7 +15,7 @@ export const logout = () => dispatch => {
         if (err) {
           console.log(err);
         } else {
-            FlowRouter.go("/");
+            FlowRouter.redirect("/");
         }
     });
 }

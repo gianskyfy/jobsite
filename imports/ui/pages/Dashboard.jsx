@@ -21,7 +21,7 @@ class DashboardPage extends Component {
     if(this.props.jobs != null)
     {
         return this.props.jobs.map((job) => (
-        <Joblist key={job._id} />
+        <Joblist key={job._id} job={job} />
         ));
     }
     else{
@@ -58,7 +58,7 @@ class DashboardPage extends Component {
                                 {this.props.jobs.length !== 0 ? (
                                     this.renderJobs()
                                 ) : (
-                                    <div id="loadingText">Loading Jobs...</div>
+                                    <div id="loadingText">No Jobs Found. <br />Please post a new one.</div>
                                 )}
                             </ul>
                         </div>
@@ -66,37 +66,6 @@ class DashboardPage extends Component {
                 </div>
 
             </div>
-
-            <div className="dashboard-footer-spacer"></div>
-            <div className="small-footer margin-top-15">
-                <div className="small-footer-copyrights">
-                    © 2018 <strong>Salefy</strong>. All Rights Reserved.
-                </div>
-                <ul className="footer-social-links">
-                    <li>
-                        <a href="#" title="Facebook" data-tippy-placement="top">
-                            <i className="icon-brand-facebook-f"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="Twitter" data-tippy-placement="top">
-                            <i className="icon-brand-twitter"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="Google Plus" data-tippy-placement="top">
-                            <i className="icon-brand-google-plus-g"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="LinkedIn" data-tippy-placement="top">
-                            <i className="icon-brand-linkedin-in"></i>
-                        </a>
-                    </li>
-                </ul>
-                <div className="clearfix"></div>
-            </div>
-
         </div>
     )
   }

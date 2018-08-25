@@ -17,7 +17,6 @@ import '/imports/ui/styles/colors/blue.css';
 export default class App extends Component {
 
   constructor(props) {
-    
     super(props);
   }
 

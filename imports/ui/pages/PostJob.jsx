@@ -30,21 +30,25 @@ class PostJob extends Component {
   }
 
   postJob(e) {
-	console.log(LocalTagsCollection.find().fetch());
-	console.log(this.state);
+	let Tags = [];
+
+	LocalTagsCollection.find().fetch().map((job) => (
+		Tags.push(job.TagName)
+	));
 
 	insert.call({
-		Title: 'data',
-		Type: 1,
-		Tags: [],
-		Commission: 50,
-		Description: ""
+		Title: this.state['job-title'],
+	 	Location: this.state['job-location'],
+		Type: Number.parseFloat(this.state['job-type']),
+		Tags: Tags,
+		Commission: Number.parseFloat(this.state['job-commission']),
+		Description: this.state['job-description']
 	  }, (err, res) => {
 		if (err) {
 		  console.log(err);
 		  console.log(res);
 		} else {
-		  // success!
+		  FlowRouter.go("/dashboard");
 		}
 	  });
   }
@@ -158,36 +162,6 @@ class PostJob extends Component {
 					</a>
 				</div>
 
-			</div>
-
-			<div className="dashboard-footer-spacer"></div>
-			<div className="small-footer margin-top-15">
-				<div className="small-footer-copyrights">
-					© 2018 <strong>Hireo</strong>. All Rights Reserved.
-				</div>
-				<ul className="footer-social-links">
-					<li>
-						<a href="#" title="Facebook" data-tippy-placement="top">
-							<i className="icon-brand-facebook-f"></i>
-						</a>
-					</li>
-					<li>
-						<a href="#" title="Twitter" data-tippy-placement="top">
-							<i className="icon-brand-twitter"></i>
-						</a>
-					</li>
-					<li>
-						<a href="#" title="Google Plus" data-tippy-placement="top">
-							<i className="icon-brand-google-plus-g"></i>
-						</a>
-					</li>
-					<li>
-						<a href="#" title="LinkedIn" data-tippy-placement="top">
-							<i className="icon-brand-linkedin-in"></i>
-						</a>
-					</li>
-				</ul>
-				<div className="clearfix"></div>
 			</div>
 
 		</div>

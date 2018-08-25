@@ -9,8 +9,18 @@ import App from '/imports/ui/layouts/App';
 import MainPage from '/imports/ui/pages/MainPage';
 import LoginPage from '/imports/ui/pages/LoginPage';
 import SignupPage from '/imports/ui/pages/SignupPage';
+
+// Company
 import Dashboard from '../../imports/ui/pages/Dashboard';
 import PostJob from '../../imports/ui/pages/PostJob';
+
+//Sales
+import FindJob from '../../imports/ui/pages/FindJob';
+import ViewJob from '../../imports/ui/pages/ViewJob';
+
+//add the loading page
+import LoadingPage from '../../imports/ui/pages/LoadingPage';
+
 // export const renderRoutes = () => (
 //   <Router>
 //     <div>
@@ -39,35 +49,99 @@ FlowRouter.route('/signup', {
 });
 
 FlowRouter.route('/dashboard', {
-  middlewares: [checkAuthentication],
+  triggersEnter: [checkAuthentication],
   authenticated: true,
   action() {
-      mount(Main, {
-        content: (<Dashboard />)
-      })
+      Tracker.autorun(() => {
+          let user = Meteor.user();
+          mount(Main, {
+            user,
+            content: (!user) ? 
+            (<LoadingPage />) : 
+            (user.profile.role_type == 0 ) ? (<Dashboard user={user} />) : ("HAHA Noob")
+          })
+      });
+  }
+});
+
+
+FlowRouter.route('/managejob', {
+  triggersEnter: [checkAuthentication],
+  authenticated: true,
+  action() {
+        Tracker.autorun(() => {
+          let user = Meteor.user();
+          mount(Main, {
+            user,
+            content: (!user) ? 
+            (<LoadingPage />) : 
+            (user.profile.role_type == 0 ) ? (<Dashboard user={user} />) : FlowRouter.redirect("/")
+          })
+      });
   }
 });
 
 FlowRouter.route('/postjob', {
-  middlewares: [checkAuthentication],
+  triggersEnter: [checkAuthentication],
   authenticated: true,
   action() {
-      mount(Main, {
-        content: (<PostJob />)
-      })
+      Tracker.autorun(() => {
+          let user = Meteor.user();
+          mount(Main, {
+            user,
+            content: (!user) ? 
+            (<LoadingPage />) : 
+            (user.profile.role_type == 0 ) ? (<PostJob />) : FlowRouter.redirect("/")
+          })
+      });
+  }
+});
+
+// Sale's Pages
+FlowRouter.route('/findjobs', {
+  triggersEnter: [checkAuthentication],
+  authenticated: true,
+  action() {
+      Tracker.autorun(() => {
+          let user = Meteor.user();
+          mount(Main, {
+            user,
+            content: (!user) ? 
+            (<LoadingPage />) : 
+            (user.profile.role_type == 1 ) ? (<FindJob />) : FlowRouter.redirect("/")
+          })
+      });
+  }
+});
+
+FlowRouter.route('/viewjob/:jobid', {
+  triggersEnter: [checkAuthentication],
+  authenticated: true,
+  action() {
+      Tracker.autorun(() => {
+          let user = Meteor.user();
+          mount(Main, {
+            user,
+            content: (!user) ? 
+            (<LoadingPage />) : 
+            (user.profile.role_type == 1 ) ? (<ViewJob />) : FlowRouter.redirect("/")
+          })
+      });
   }
 });
 
 FlowRouter.notFound = {
   action: function() {
       if(Meteor.userId() === null)
-        FlowRouter.go("/");
+        FlowRouter.redirect("/");
       else
-        FlowRouter.go("/dashboard");   
+        FlowRouter.redirect("/dashboard");   
   }
 };
 
 function checkAuthentication(context) {
     if(Meteor.userId() === null)
-        FlowRouter.go("/");  
+    {
+        FlowRouter.go("/");
+    }
 }

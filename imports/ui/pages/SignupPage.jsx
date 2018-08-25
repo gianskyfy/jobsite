@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Accounts } from 'meteor/accounts-base';
-
+import { insert } from '/lib/api/Company';
 import '/imports/ui/styles/signup.less';
 
 export default class SignupPage extends Component {
@@ -70,7 +70,6 @@ export default class SignupPage extends Component {
               </div>
             </form>
           </div>
-          <div className='signup-img'>HAHA</div>
         </div>
       </div>
 
