@@ -1,0 +1,75 @@
+/* Loaders */
+@mixin nth-children($points...) {
+    @each $point in $points {
+        &:nth-child(#{$point}) {
+            @content;
+        }
+    }
+}
+
+.content-loader {
+    height: 214px;
+  
+    width: 100%;
+  
+    &--line {
+        height: 10px;
+        margin: 10px;
+        animation: pulse 2s infinite ease-in-out;
+    }
+  
+    div {
+        @include nth-children(1, 5, 9) {
+            width: 70%;
+        }
+        @include nth-children(2, 6, 10) {
+            width: 90%;
+        }
+        @include nth-children(3, 7) {
+            width: 30%;
+        }
+        @include nth-children(4, 8) {
+            width: 50%;
+        }
+    }
+}
+
+.menu-loader {
+    height: 214px;
+  
+    width: 100%;
+  
+    &--line {
+        height: 10px;
+        margin: 10px;
+        animation: pulse 2s infinite ease-in-out;
+    }
+  
+    div {
+        @include nth-children(1) {
+            width: 80%;
+            margin-top: 50px;
+        }
+        @include nth-children(2) {
+            margin-top: 20px;
+            width: 80%;
+        }
+        @include nth-children(3, 4, 5) {
+            width: 73%;
+            margin-left: 30px;
+            margin-top: 15px
+        }
+    }
+}
+
+@keyframes pulse {
+    0% {
+        background-color: rgba(165, 165, 165, 0.2)
+    }
+    50% {
+        background-color: rgba(165, 165, 165, 0.4)
+    }
+    100% {
+        background-color: rgba(165, 165, 165, 0.2)
+    }
+}
