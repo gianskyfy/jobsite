@@ -54,9 +54,11 @@ class FindJobPage extends Component {
         
                 <div className="row">
                     <div className="listings-container grid-layout margin-top-35">
-                    
-                        { this.loadJobs() }
-
+                    {this.props.jobs.length == 0 ? (
+                        <div id="loadingText">No Jobs Posted.</div>
+                    ) : (
+                         this.loadJobs()
+                    )}
                     </div>
                 </div>
             </div>

@@ -9,47 +9,46 @@ import InputScripts, {customStyles} from "../js/inputscripts";
 LocalTagsCollection = new Meteor.Collection("LocalTags", {connection: null});
 class PostJob extends Component {
   constructor(props) {
-	super(props);
-	
-	this.postJob = this.postJob.bind(this);
-	this.onChange = this.onChange.bind(this);
+		super(props);
+		
+		this.postJob = this.postJob.bind(this);
+		this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-	let inputScripts = new InputScripts();
-	new LayoutScripts().load();
-	inputScripts.loadTag(LocalTagsCollection);
+		let inputScripts = new InputScripts();
+		new LayoutScripts().load();
+		inputScripts.loadTag(LocalTagsCollection);
   }
 
   onChange(e)
   {
-	if(e.target)
-		this.setState({[ e.target.name]: e.target.value });
-	else
-		this.setState({ "job-type": e.value });
+		if(e.target)
+			this.setState({[ e.target.name]: e.target.value });
+		else
+			this.setState({ "job-type": e.value });
   }
 
   postJob(e) {
 	let Tags = [];
 
 	LocalTagsCollection.find().fetch().map((job) => (
-		Tags.push(job.TagName)
+			Tags.push(job.TagName)
 	));
 
 	insert.call({
-		Title: this.state['job-title'],
-	 	Location: this.state['job-location'],
-		Type: Number.parseFloat(this.state['job-type']),
-		Tags: Tags,
-		Commission: Number.parseFloat(this.state['job-commission']),
-		Description: this.state['job-description']
+			title: this.state['job-title'],
+			location: this.state['job-location'],
+			type: Number.parseFloat(this.state['job-type']),
+			tags: Tags,
+			commission: Number.parseFloat(this.state['job-commission']),
+			description: this.state['job-description']
 	  }, (err, res) => {
-		if (err) {
-		  console.log(err);
-		  console.log(res);
-		} else {
-		  FlowRouter.go("/dashboard");
-		}
+			if (err) {
+				console.log(err);
+			} else {
+				FlowRouter.go("/dashboard");
+			}
 	  });
   }
 
@@ -98,10 +97,8 @@ class PostJob extends Component {
 											onChange={this.onChange}
 											options={[
 												{ value: 0, label: 'Full Time' },
-												{ value: 1, label: 'Freelance' },
-												{ value: 2, label: 'Part Time' },
-												{ value: 3, label: 'Temporary' }
-											  ]} />
+												{ value: 1, label: 'Part Time' }
+											]} />
 									</div>
 
 									

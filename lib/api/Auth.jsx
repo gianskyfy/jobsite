@@ -12,6 +12,27 @@ let Schema = new SimpleSchema({
     account_type: { type: Number },
 });
 
+export const createUserObject = (Type = 0) => {
+    var user = Meteor.user();
+
+    if(Type == 0) {
+        return {
+            user_id: user._id,
+            company_id: user.profile.company.company_id,
+            name: user.profile.name,
+            email: user.username,
+            company: user.profile.company.name,
+            address: user.profile.company.address
+        };
+    }
+    else {
+        return {
+            user_id: user._id,
+            name: user.profile.name,
+            email: user.username,
+        };
+    }
+}
 
 export const register = new ValidatedMethod({
     name: 'Auth.methods.register',

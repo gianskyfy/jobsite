@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import Moment from 'react-moment';
 import { withTracker } from 'meteor/react-meteor-data';
 import { fetch } from '/lib/api/Jobs';
-import Moment from 'react-moment';
+import { isApplied } from '/lib/api/UserApplication';
 
 import ApplyModal from "../components/ApplyModal";
 
@@ -68,7 +69,7 @@ class ViewJobPage extends Component {
                                         <div className="left-side">
                                             <div className="header-image"><a href="/img/companies/1/company-logo.png"><img src="/img/companies/1/company-logo.png" alt="" /></a></div>
                                             <div className="header-details">
-                                                <h3>{job.Title}</h3>
+                                                <h3>{job.title}</h3>
                                                 <h5>About the Employer</h5>
                                                 <ul>
                                                     <li><a href="single-company-profile.html"><i className="icon-material-outline-business"></i> {job.owner.company.name}</a></li>
@@ -79,7 +80,7 @@ class ViewJobPage extends Component {
                                                             <span className="star"></span>
                                                         </div>
                                                     </li>
-                                                    <li><i className="icon-material-outline-location-on"></i> { job.Location }</li>
+                                                    <li><i className="icon-material-outline-location-on"></i> { job.location }</li>
                                                     <li><div className="verified-badge-with-title">Verified</div></li>
                                                 </ul>
                                             </div>
@@ -98,15 +99,17 @@ class ViewJobPage extends Component {
 
                                 <div className="single-page-section">
                                     <h3 className="margin-bottom-25">Job Description</h3>
-                                    <p>{ job.Description }</p>
+                                    <p>{ job.description }</p>
                                 </div>
                             </div>
                             
                             <div className="col-xl-4 col-lg-4">
                                 <div className="sidebar-container">
-
-                                    <a href="#" onClick={ this.showModal } className="apply-now-button popup-with-zoom-anim">Apply Now <i className="icon-material-outline-arrow-right-alt"></i></a>
-                                        
+                                    { (!this.props.is_applied) ? (
+                                        <a href="#" onClick={ this.showModal } className="apply-now-button popup-with-zoom-anim">Apply Now <i className="icon-material-outline-arrow-right-alt"></i></a>
+                                    ) : (
+                                        <a href="#" className="apply-now-button applied popup-with-zoom-anim">Job Applied <i className="verified-badge"></i></a>
+                                    )}
                                     <div className="sidebar-widget">
                                         <div className="job-overview">
                                             <div className="job-overview-headline">Job Summary</div>
@@ -115,17 +118,17 @@ class ViewJobPage extends Component {
                                                     <li>
                                                         <i className="icon-material-outline-location-on"></i>
                                                         <span>Location</span>
-                                                        <h5>{job.Location}</h5>
+                                                        <h5>{job.location}</h5>
                                                     </li>
                                                     <li>
                                                         <i className="icon-material-outline-business-center"></i>
                                                         <span>Job Type</span>
-                                                        <h5>{ job.Type == 0 ? "Full Time" : "" }</h5>
+                                                        <h5>{ job.type == 0 ? "Full Time" : "" }</h5>
                                                     </li>
                                                     <li>
                                                         <i className="icon-material-outline-local-atm"></i>
                                                         <span>Commission</span>
-                                                        <h5>{job.Commission}%</h5>
+                                                        <h5>{job.commission}%</h5>
                                                     </li>
                                                     <li>
                                                         <i className="icon-material-outline-access-time"></i>
@@ -151,9 +154,11 @@ class ViewJobPage extends Component {
 }
 
 const ViewJob = withTracker(() => {
+    const is_applied = isApplied(FlowRouter._current.params.jobid);
     const jobs = fetch({_id: FlowRouter._current.params.jobid});
     return {
-      jobs,
+        is_applied,
+        jobs
     };
 })(ViewJobPage);
 

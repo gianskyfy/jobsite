@@ -12691,6 +12691,10 @@ a.apply-now-button {
 	display: block;
 }
 
+a.applied {
+	background-color: #66676b !important;
+}
+
 a.apply-now-button:hover {
 	transform: translateY(-3px);
 	box-shadow: 0 2px 8px rgba(102,103,107,0.35);
