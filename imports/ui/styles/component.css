@@ -62,3 +62,48 @@
 {
   display:none;
 }
+
+/* rect modal custom ui */
+.react-confirm-alert-overlay
+{
+  opacity: .85 !important;
+  background: #111 !important;
+  z-index: 999 !important;
+
+  -webkit-animation: none !important;
+  -moz-animation: none !important;
+  -o-animation: none !important;
+  animation: none !important;
+}
+
+.custom-ui {
+  text-align: center;
+  width: 500px;
+  padding: 40px;
+  background: #fff;
+  box-shadow: 0 20px 75px rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+}
+
+.custom-ui > h3 {
+  display: block;
+  font-weight: 700;
+  color: #333;
+  font-size: 24px;
+}
+
+.custom-ui > button {
+  width: 160px;
+  padding: 10px;
+  border: 1px solid #fff;
+  margin: 10px;
+  cursor: pointer;
+  background: #2a41e8;
+  color: #fff;
+  font-size: 14px;
+  transition: 0.35s;
+}
+
+.custom-ui > button.cancel {
+  background: #dc3139;
+}

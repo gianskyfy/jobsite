@@ -21,7 +21,7 @@ class ApplyModal extends Component {
             if (err) {
                 console.log(err);
             } else {
-                FlowRouter.go("/dashboard");
+                this.props.showModal({type: 'click'});
             }
         });
     }
@@ -30,7 +30,7 @@ class ApplyModal extends Component {
         let css = {top: "0px", position: "absolute", height: "920px"};
         return  <div id="mainApplyModalContent">
             <div className="mfp-bg my-mfp-zoom-in mfp-ready"></div>
-            <div className="mfp-wrap mfp-close-btn-in mfp-auto-cursor my-mfp-zoom-in mfp-ready" tabIndex="-1" style={css}><div className="mfp-container mfp-inline-holder"><div className="mfp-content"><div id="small-dialog" className="zoom-anim-dialog dialog-with-tabs">
+            <div className="mfp-wrap mfp-close-btn-in mfp-auto-cursor my-mfp-zoom-in mfp-ready zoomIn animated faster" tabIndex="-1" style={css}><div className="mfp-container mfp-inline-holder"><div className="mfp-content"><div id="small-dialog" className="zoom-anim-dialog dialog-with-tabs">
                 <div className="sign-in-form">
 
                     <ul className="popup-tabs-nav">

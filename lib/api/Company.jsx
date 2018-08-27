@@ -9,8 +9,10 @@ let Schema = new SimpleSchema({
     Tags: {type: [String]},
 });
 
+export const fetch = (condition = {}, sort = {}) => {
+    return Company.find(condition, { sort: sort}).fetch();
+};
 
-export default Company;
 export const insert = new ValidatedMethod({
     name: 'Company.methods.insert',
     validate: new SimpleSchema(Schema).validator(),

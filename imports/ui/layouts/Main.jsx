@@ -8,6 +8,7 @@ import '/imports/ui/styles/icons.css';
 import '/imports/ui/styles/main.css';
 import '/imports/ui/styles/component.css';
 import '/imports/ui/styles/component.scss';
+import '/imports/ui/styles/animate.css';
 
 import HeaderBar from '/imports/ui/components/HeaderBar.jsx';
 import MainMenu from '/imports/ui/components/MainMenu.jsx';

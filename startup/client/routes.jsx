@@ -16,6 +16,8 @@ import PostJob from '../../imports/ui/pages/PostJob';
 
 //Sales
 import FindJob from '../../imports/ui/pages/FindJob';
+import Applications from '../../imports/ui/pages/Applications';
+import Companies from '../../imports/ui/pages/Companies';
 import ViewJob from '../../imports/ui/pages/ViewJob';
 
 //add the loading page
@@ -109,6 +111,38 @@ FlowRouter.route('/findjobs', {
             content: (!user) ? 
             (<LoadingPage />) : 
             (user.profile.role_type == 1 ) ? (<FindJob />) : FlowRouter.redirect("/")
+          })
+      });
+  }
+});
+
+FlowRouter.route('/applications', {
+  triggersEnter: [checkAuthentication],
+  authenticated: true,
+  action() {
+      Tracker.autorun(() => {
+          let user = Meteor.user();
+          mount(Main, {
+            user,
+            content: (!user) ? 
+            (<LoadingPage />) : 
+            (user.profile.role_type == 1 ) ? (<Applications />) : FlowRouter.redirect("/")
+          })
+      });
+  }
+});
+
+FlowRouter.route('/findcompanies', {
+  triggersEnter: [checkAuthentication],
+  authenticated: true,
+  action() {
+      Tracker.autorun(() => {
+          let user = Meteor.user();
+          mount(Main, {
+            user,
+            content: (!user) ? 
+            (<LoadingPage />) : 
+            (user.profile.role_type == 1 ) ? (<Companies />) : FlowRouter.redirect("/")
           })
       });
   }

@@ -16,7 +16,7 @@ export default class Joblist extends Component {
 
                         <div className="job-listing-description">
                             <h3 className="job-listing-title">
-                                <a href="#">{ job.Title }</a> 
+                                <a href="#">{ job.title }</a> 
                                 {/* <span className="dashboard-status-button yellow">Pending</span> */}
                             </h3>
 
